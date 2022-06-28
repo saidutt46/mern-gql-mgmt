@@ -8,8 +8,9 @@
     "install-client": "npm install --prefix client",
     "heroku-postbuild": "npm run install-client && npm run build",
     "client": "npm start --prefix client",
-    "server": "nodemon index.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node index.js",
+    "server:dev": "nodemon index.js",
+    "dev": "concurrently \"npm run server:dev\" \"npm run client\"",
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\""
   },
   "keywords": [],
