@@ -3,9 +3,11 @@ const colors = require('colors');
 const cors = require('cors');   
 require('dotenv').config();
 const { graphqlHTTP } = require('express-graphql');
-const port = process.env.PORT || 8000;
+
+const port = process.env.PORT || 5000;
 const connectDB = require('./config/db');
 const schema = require('./schema/schema');
+const path = require('path');
 
 const app = express();
 
@@ -19,4 +21,13 @@ app.use('/graphql', graphqlHTTP({
     graphiql: process.env.NODE_ENV === 'development'
 }));
 
-app.listen(port, console.log(`server running on port ${port}`));
+// serve static assets if in prod mode
+if (process.env.NODE_ENV === "production") {
+    // set static folder
+    app.use(express.static("client/build"));
+    app.get("*", (req, res) => {
+      res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+    });
+}
+
+app.listen(port, () => console.log(`Server running on port: ${port}`.blue.underline.bold));
