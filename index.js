@@ -14,8 +14,10 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
+// Middleware for CORS
 app.use(cors());
 
+// Middleware for GraphQL
 app.use('/graphql', graphqlHTTP({
     schema,
     graphiql: process.env.NODE_ENV === 'development'
